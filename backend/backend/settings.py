@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'academics',
     'core_app',
+    'teacher'
 ]
 
 MIDDLEWARE = [
