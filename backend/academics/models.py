@@ -6,6 +6,11 @@ class Grade(models.Model):
 
     def __str__(self):
         return self.grade
+class Exam(models.Model):
+    exam = models.CharField(max_length=10)
+
+    def __str__(self):
+        return self.exam
 
 class Section(models.Model):
     section = models.CharField(max_length=10)
