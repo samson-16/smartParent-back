@@ -1,6 +1,6 @@
 from django.db import models
-from core_app import Student,Teacher
-from academics import Section,Grade,Exam
+from core_app.models import Student, Teacher
+from academics.models import Section, Grade, Exam
 
 class ExamResult(models.Model):
     mark = models.DecimalField(max_digits=5, decimal_places=2)
