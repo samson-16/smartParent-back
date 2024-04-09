@@ -2,7 +2,7 @@ from django.shortcuts import render
 # Create your views here.
 from rest_framework import generics
 from .models import ExamResult,Assignment
-from .serializers import ExamResultSerializer,AssignmentSerializer
+from .serializer import ExamResultSerializer,AssignmentSerializer
 
 class ExamResultListCreate(generics.ListCreateAPIView):
     queryset = ExamResult.objects.all()
