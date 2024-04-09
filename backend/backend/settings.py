@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
     'academics',
     'core_app',
 ]
@@ -47,6 +48,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -135,3 +137,17 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
+
+AUTH_USER_MODEL = 'core_app.User'
+
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',  
+]
+CORS_ALLOW_ALL_METHODS = True
+
+# Optional: Allow all headers
+CORS_ALLOW_ALL_HEADERS = True
+
+# Optional: Allow credentials (cookies, authorization headers, etc.)
+CORS_ALLOW_CREDENTIALS = True
