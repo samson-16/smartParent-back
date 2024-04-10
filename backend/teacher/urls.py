@@ -1,4 +1,4 @@
-from django.urls import path
+""" from django.urls import path
 from .views import ExamResultListCreate, ExamResultRetrieveUpdateDestroy,AssignmentListCreate, AssignmentRetrieveUpdateDestroy
 
 
@@ -8,3 +8,4 @@ urlpatterns = [
     path('assignments/', AssignmentListCreate.as_view(), name='assignment-list-create'),
     path('assignments/<int:pk>/', AssignmentRetrieveUpdateDestroy.as_view(), name='assignment-retrieve-update-destroy'),
 ]
+ """

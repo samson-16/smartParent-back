@@ -1,4 +1,4 @@
-from django.shortcuts import render
+""" from django.shortcuts import render
 # Create your views here.
 from rest_framework import generics
 from .models import ExamResult,Assignment
@@ -19,3 +19,4 @@ class AssignmentListCreate(generics.ListCreateAPIView):
 class AssignmentRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     queryset = Assignment.objects.all()
     serializer_class = AssignmentSerializer
+ """

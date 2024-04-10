@@ -1,4 +1,4 @@
-from rest_framework import serializers
+""" from rest_framework import serializers
 from .models import ExamResult,Assignment
 
 class ExamResultSerializer(serializers.ModelSerializer):
@@ -8,4 +8,4 @@ class ExamResultSerializer(serializers.ModelSerializer):
 class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model=Assignment
-        fields = '__all__'
+        fields = '__all__' """
