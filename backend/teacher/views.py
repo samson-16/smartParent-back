@@ -1,21 +1,19 @@
-from django.shortcuts import render
-# Create your views here.
 from rest_framework import generics
-from .models import ExamResult,Assignment
-from .serializer import ExamResultSerializer,AssignmentSerializer
+from .models import Task, Exam, ExamResult
+from .serializers import TaskSerializer, ExamSerializer, ExamResultSerializer
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 
-class ExamResultListCreate(generics.ListCreateAPIView):
+class TaskListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = [AllowAny]
+
+class ExamListCreateAPIView(generics.ListCreateAPIView):
+    queryset = Exam.objects.all()
+    serializer_class = ExamSerializer
+    permission_classes = [AllowAny]
+
+class ExamResultListCreateAPIView(generics.ListCreateAPIView):
     queryset = ExamResult.objects.all()
     serializer_class = ExamResultSerializer
-
-class ExamResultRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ExamResult.objects.all()
-    serializer_class = ExamResultSerializer
-
-class AssignmentListCreate(generics.ListCreateAPIView):
-    queryset = Assignment.objects.all()
-    serializer_class = AssignmentSerializer
-
-class AssignmentRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Assignment.objects.all()
-    serializer_class = AssignmentSerializer
+    permission_classes = [AllowAny]
