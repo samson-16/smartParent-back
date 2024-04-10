@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-q1*^a=67xyhq(5^kwtb)+_!813^n-5%*y)%7^ical$aa+uoac2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["http://tonetor.pythonanywhere.com/"]
 
 
 # Application definition
