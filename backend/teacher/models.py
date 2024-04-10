@@ -1,6 +1,6 @@
 from django.db import models
 from core_app.models import Student,Teacher
-from academics.models import Section,Grade,ClassSubject
+from academics.models import Section,Grade,ClassSubject,Subject
 
 
 class Exam(models.Model):
@@ -31,7 +31,7 @@ class Task(models.Model):
         (ASSIGNMENT, 'Assignment'),
     ]
 
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=255)
     description = models.TextField()
     deadline = models.DateTimeField()
     details = details = models.ForeignKey(ClassSubject , on_delete=models.CASCADE)
@@ -39,3 +39,9 @@ class Task(models.Model):
 
     def __str__(self):  
         return self.title
+
+class Resource(models.Model):
+    title = models.CharField(max_length=255)
+    grade = models.ForeignKey(Grade, on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    File = models.FileField()
