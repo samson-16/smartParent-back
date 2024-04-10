@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 """ from django.db import models
 from core_app import Student,Teacher
 from academics import Section,Grade,Exam
+=======
+from django.db import models
+from core_app.models import Student, Teacher
+from academics.models import Section, Grade, Exam
+>>>>>>> 866b0296f5f38d0e62d0be8a2f04e85b283963d1
 
 class ExamResult(models.Model):
     mark = models.DecimalField(max_digits=5, decimal_places=2)
