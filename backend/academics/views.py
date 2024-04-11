@@ -39,9 +39,11 @@ class ClassSubjectListAPIView(generics.ListAPIView):
     permission_classes = [AllowAny]
 
     def get_queryset(self):
-        queryset = ClassSubject.objects.all(); 
+        queryset = ClassSubject.objects.all()
         teacher = self.request.query_params.get('teacher')
         grade = self.request.query_params.get('grade')
+        section = self.request.query_params.get('section')
+
         if teacher is not None:
             try:
                 teacher = int(teacher)
@@ -51,7 +53,12 @@ class ClassSubjectListAPIView(generics.ListAPIView):
 
         if grade is not None:
             queryset = queryset.filter(grade__grade=grade)
+
+        if section is not None:
+            queryset = queryset.filter(section=section)
+
         return queryset
+
 
 class ClassSubjectCreateAPIView(generics.CreateAPIView):
     queryset = ClassSubject.objects.all()
