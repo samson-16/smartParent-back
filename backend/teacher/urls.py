@@ -8,3 +8,4 @@ urlpatterns = [
     path('resource/', ResourceCreateAPIView.as_view(), name='resource'),
     path('resource/<int:resource_id>/download/', download_resource, name='download_resource'),
 ]
+

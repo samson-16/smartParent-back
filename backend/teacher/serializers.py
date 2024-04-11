@@ -14,7 +14,7 @@ class ExamSerializer(serializers.ModelSerializer):
 class ExamResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExamResult
-        fields = '__all__'
+        fields = ['id' , 'exam' , 'description', 'teacher', 'file' ]
 
 class ResourceSerializer(serializers.ModelSerializer):
     class Meta:

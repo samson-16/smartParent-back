@@ -6,6 +6,7 @@ import magic
 
 
 class Exam(models.Model):
+    grade = models.ForeignKey(Grade, on_delete=models.CASCADE)
     description = models.TextField()
     details = models.ForeignKey(ClassSubject, on_delete=models.CASCADE)
     exam_date = models.DateField()
@@ -14,13 +15,18 @@ class Exam(models.Model):
     def __str__(self):
         return self.description
 
+def validate_exam_result(file):
+    accept = ['application/pdf', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+    file_type = magic.from_buffer(file.read(1000), mime=True)
+    if file_type not in accept:
+        raise ValidationError("Unsupported file type")
 
 
 class ExamResult(models.Model):
     exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    mark = models.DecimalField(max_digits=5, decimal_places=2)
+    description = models.CharField(max_length=255)
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    file = models.FileField(upload_to='examresult/', validators=[validate_exam_result])
     def __str__(self):
         return f"{self.student.first_name} {self.student.last_name}'s result for {self.exam.description}"
 
