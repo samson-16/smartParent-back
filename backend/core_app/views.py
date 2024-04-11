@@ -27,7 +27,7 @@ class UserView(generics.ListAPIView):
             queryset = queryset.filter(id=user_id)
         return queryset
 
-class StudentCreateAPIView(generics.CreateAPIView):
+class StudentCreateAPIView(generics.ListCreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     permission_classes = [AllowAny]
