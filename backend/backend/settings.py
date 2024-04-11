@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-q1*^a=67xyhq(5^kwtb)+_!813^n-5%*y)%7^ical$aa+uoac2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["http://tonetor.pythonanywhere.com/"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -43,14 +43,15 @@ INSTALLED_APPS = [
     'drf_yasg',
     'academics',
     'core_app',
-    'teacher'
+    'teacher',
+    'chat'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -130,6 +131,10 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = '/media/'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
@@ -148,4 +153,5 @@ AUTH_USER_MODEL = 'core_app.User'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',  
 ]
-CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ORIGIN_ALLOW_ALL = True
