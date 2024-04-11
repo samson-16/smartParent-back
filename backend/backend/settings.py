@@ -31,7 +31,6 @@ ALLOWED_HOSTS = ["http://tonetor.pythonanywhere.com/"]
 # Application definition
 
 INSTALLED_APPS = [
-    'adminlte2'
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
