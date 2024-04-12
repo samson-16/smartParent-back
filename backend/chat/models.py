@@ -3,7 +3,6 @@ from core_app.models import User
 # Create your models here.
 
 class ChatMessage(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE , related_name= "user")
     sender = models.ForeignKey(User, on_delete=models.CASCADE , related_name= "sender")
     receiver = models.ForeignKey(User, on_delete=models.CASCADE , related_name= "receiver")
 
@@ -14,8 +13,9 @@ class ChatMessage(models.Model):
     class Meta:
         ordering = ['date']
         verbose_name_plural = 'Messages'
+
     def __str__(self):
-        return f"{self.sender} - {self.receiver}"
+        return f"{self.sender.username} - {self.receiver.username}"
     
     @property
     def sender_profile(self):

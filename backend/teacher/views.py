@@ -6,9 +6,17 @@ from django.http import HttpResponse, FileResponse,Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
 class TaskListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Task.objects.all()
     serializer_class = TaskSerializer
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        queryset = Task.objects.all()
+        section = self.request.query_params.get('section')
+
+        if section:
+            queryset = queryset.filter(details__section=section)
+
+        return queryset
 
 class ExamListCreateAPIView(generics.ListCreateAPIView):
     queryset = Exam.objects.all()

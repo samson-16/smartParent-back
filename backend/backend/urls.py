@@ -33,6 +33,7 @@ urlpatterns = [
     path ('api/', include("core_app.urls")),
     path('api/', include("academics.urls")),
     path('api/', include("teacher.urls")),
+    path('', include("chat.urls")),
 
      path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
      path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),   name='schema-swagger-ui'),

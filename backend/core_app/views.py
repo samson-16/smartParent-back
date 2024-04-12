@@ -9,6 +9,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import get_user_model , authenticate
+from django.core.mail import send_mail, EmailMultiAlternatives
+from django.conf import settings
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -49,13 +53,39 @@ class ParentCreateAPIView(generics.CreateAPIView):
                 'email': self.request.data.get('email'),
                 'phone_number': self.request.data.get('phone_number'),
                 'role': 'parent',
-                'password': make_password(password),
+                'password': password,
             }
-            print(password)
+            print(password) 
             user_serializer = UserSerializer(data=user_data)
             user_serializer.is_valid(raise_exception=True)
             user = user_serializer.save()
             serializer.save(user=user)
+
+            parent = f"{user.first_name} {user.last_name}"
+            username  = user.email
+            parent_password = password 
+            link = "http://localhost:5173/"
+            context = {
+                "parent": parent, 
+                "username": username, 
+                "password": parent_password,
+                "link" : link
+            }
+            emailsubject = 'Your Account Details'
+            html_msg =  render_to_string("email.html", context=context)
+            plain_msg = strip_tags (html_msg)
+            message = EmailMultiAlternatives(
+                subject=emailsubject, 
+                body= plain_msg,
+                from_email = settings.DEFAULT_FROM_EMAIL , 
+                to= [user.email]
+                )
+            message.attach_alternative(html_msg , "text/html")
+            message.send()
+
+            """ from_email = 
+            to_email = user.email
+            send_mail(subject, message, from_email, [to_email]) """
         else:
             raise serializers.ValidationError("Missing required fields")
         
