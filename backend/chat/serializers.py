@@ -11,4 +11,4 @@ class ListChatMessagesSerializer(serializers.ModelSerializer):
     receiver = UserSerializer()
     class Meta:
         model = ChatMessage
-        fields = ['id' , 'sender', 'receiver' , 'message']
+        fields = ['id' , 'sender', 'receiver' , 'message' , 'date']

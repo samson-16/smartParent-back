@@ -30,11 +30,29 @@ class UserView(generics.ListAPIView):
         if user_id:
             queryset = queryset.filter(id=user_id)
         return queryset
+class UserEditView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [AllowAny]
 
 class StudentCreateAPIView(generics.ListCreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        grade = self.request.query_params.get('grade')
+        section = self.request.query_params.get('section')
+
+        if grade and section:
+            queryset = queryset.filter(grade=grade, section=section)
+        elif grade:
+            queryset = queryset.filter(grade=grade)
+        elif section:
+            queryset = queryset.filter(section=section)
+
+        return queryset
 
 class ParentCreateAPIView(generics.CreateAPIView):
     queryset = Parent.objects.all()
@@ -97,11 +115,19 @@ class ParentListView(generics.ListAPIView):
     def get_queryset(self):
         queryset = super().get_queryset()
         user_id = self.request.query_params.get('id')
+        grade = self.request.query_params.get('grade')
+        section = self.request.query_params.get('section')
+
         if user_id:
             queryset = queryset.filter(user__id=user_id)
-        return queryset
+        if grade:
+            queryset = queryset.filter(children__grade=grade)
+        if section:
+            queryset = queryset.filter(children__section=section)
 
-class TeacherCreateAPIView(generics.ListCreateAPIView):
+        return queryset.distinct()
+
+class TeacherCreateAPIView(generics.CreateAPIView):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
     permission_classes = [AllowAny] 
@@ -127,6 +153,19 @@ class TeacherCreateAPIView(generics.ListCreateAPIView):
             serializer.save(user=user)
         else:
             raise serializers.ValidationError("Missing required fields")
+
+
+class TeacherListAPIView(generics.ListAPIView):
+    serializer_class = TeacherSerializer
+    permission_classes = [IsAuthenticated] 
+
+    def get_queryset(self):
+        queryset = Teacher.objects.all()
+        user_id = self.request.query_params.get('id')
+        if user_id:
+            queryset = queryset.filter(user__id=user_id)
+        return queryset
+
 
 class TokenObtainPairView(APIView):
     permission_classes = [AllowAny] 

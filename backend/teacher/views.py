@@ -1,22 +1,30 @@
 from rest_framework import generics , viewsets
 from .models import Task, Exam, ExamResult, Resource
-from .serializers import TaskSerializer, ExamSerializer, ExamResultSerializer, ResourceSerializer
+from .serializers import TaskSerializer, ExamSerializer, ExamResultSerializer, ResourceSerializer, TaskListSerializer
 from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
 from django.http import HttpResponse, FileResponse,Http404, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
-class TaskListCreateAPIView(generics.ListCreateAPIView):
-    serializer_class = TaskSerializer
+
+class TaskListAPIView(generics.ListAPIView):
+    serializer_class = TaskListSerializer
     permission_classes = [AllowAny]
 
     def get_queryset(self):
         queryset = Task.objects.all()
         section = self.request.query_params.get('section')
+        teacher = self.request.query_params.get('teacher')
 
         if section:
             queryset = queryset.filter(details__section=section)
-
+        if teacher:
+            queryset = queryset.filter(details__teacher=teacher)
         return queryset
+
+class TaskCreateAPIView(generics.CreateAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = [AllowAny]
 
 class ExamListCreateAPIView(generics.ListCreateAPIView):
     queryset = Exam.objects.all()

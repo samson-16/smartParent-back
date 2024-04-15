@@ -1,7 +1,9 @@
 from rest_framework import generics
 from .models import Grade, Section, Subject, ClassSubject
+from core_app.models import Student
 from .serializers import GradeSerializer, SectionSerializer, SubjectSerializer, ClassSubjectSerializer , ListClassSubjectSerializer
 from rest_framework.permissions import AllowAny
+from core_app.serializers import StudentSerializer
 
 class GradeListCreateAPIView(generics.ListCreateAPIView):
     queryset = Grade.objects.all()
@@ -78,3 +80,12 @@ class TeacherClassSubjectAPIView(generics.ListAPIView):
         teacher_id = self.kwargs.get('teacher_id')
         queryset = ClassSubject.objects.filter(teacher_id=teacher_id)
         return queryset
+
+class StudentsBySectionListAPIView(generics.ListAPIView):
+    serializer_class = StudentSerializer
+    permission_classes = [AllowAny]
+    
+    def get_queryset(self):
+        grade = self.request.query_params.get('grade')
+        section = self.request.query_params.get('section')
+        return Student.objects.filter(grade=grade, section=section)

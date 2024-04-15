@@ -11,4 +11,5 @@ urlpatterns = [
     path('class-subjects/', views.ClassSubjectListAPIView.as_view(), name='class-subject-list'),
     path('add-class-subjects/', views.ClassSubjectCreateAPIView.as_view(), name='add-class-subject'),
     path('class-subjects/<int:pk>/', views.ClassSubjectRetrieveUpdateDestroyAPIView.as_view(), name='class-subject-detail'),
+    path('api/student-list/', views.StudentsBySectionListAPIView.as_view(), name='students_by_section'),
 ]

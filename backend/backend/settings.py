@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'academics',
     'core_app',
     'teacher',
+    'parent',
     'chat'
 ]
 
@@ -109,6 +110,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+#JWT Token 
+from datetime import timedelta
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=3), 
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=30), 
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

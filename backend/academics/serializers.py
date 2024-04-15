@@ -1,7 +1,6 @@
 from rest_framework import serializers
-from core_app.serializers import TeacherSerializer
 from .models import Grade, Section, Subject, ClassSubject
-
+from core_app.serializers import TeacherSerializer
 
 
 class GradeSerializer(serializers.ModelSerializer):

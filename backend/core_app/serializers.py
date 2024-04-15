@@ -1,12 +1,12 @@
 from .models import User , Student , Parent , Teacher
 from rest_framework import serializers
-
 class UserSerializer(serializers.ModelSerializer):
+    user_id = serializers.ReadOnlyField(source='id')
     username = serializers.EmailField(source='email')
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'phone_number', 'role', 'password']
+        fields = ['user_id','username', 'email', 'first_name', 'last_name', 'phone_number', 'role', 'password']
         extra_kwargs = {'password': {'write_only': True}} 
 
     def create(self, validated_data):
@@ -26,6 +26,7 @@ class StudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = '__all__'
 
+
 class ParentSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source='user.first_name')
     last_name = serializers.CharField(source='user.last_name')
@@ -37,6 +38,7 @@ class ParentSerializer(serializers.ModelSerializer):
         model = Parent
         fields = ['id', 'first_name', 'last_name', 'email', 'phone_number', 'children']
 class ParentListSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(source='user.id', read_only=True)
     first_name = serializers.CharField(source='user.first_name')
     last_name = serializers.CharField(source='user.last_name')
     email = serializers.EmailField(source='user.email')
@@ -45,14 +47,15 @@ class ParentListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Parent
-        fields = ['id', 'first_name', 'last_name', 'email', 'phone_number', 'children']
+        fields = ['id', 'user_id', 'first_name', 'last_name', 'email', 'phone_number', 'children']
 
 class TeacherSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source='user.first_name')
     last_name = serializers.CharField(source='user.last_name')
     email = serializers.EmailField(source='user.email')
     phone_number = serializers.CharField(source='user.phone_number')
+    user_id = serializers.ReadOnlyField(source='user.id') 
 
     class Meta:
         model = Teacher
-        fields = ['id', 'first_name', 'last_name', 'email', 'phone_number']
+        fields = ['id', 'user_id', 'first_name', 'last_name', 'email', 'phone_number']
