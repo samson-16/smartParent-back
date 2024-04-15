@@ -19,11 +19,14 @@ class Student(models.Model):
         ]
     )
     section = models.CharField(max_length=10)
+    
+    class Meta: 
+        unique_together = ('grade' , 'section' , 'roll_number')
     def __str__(self):
         return f'{self.first_name} {self.last_name},  Grade: {self.grade} , Section: {self.section} , Roll Number: {self.roll_number}'
 
 class User(AbstractUser):
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=15 , unique=True)
     email = models.EmailField(unique=True)
     role = models.CharField(max_length=20, choices=[('teacher', 'Teacher'), ('parent', 'Parent'), ('admin', 'Admin')])
     groups = models.ManyToManyField(

@@ -2,43 +2,43 @@ from rest_framework import generics
 from .models import Grade, Section, Subject, ClassSubject
 from core_app.models import Student
 from .serializers import GradeSerializer, SectionSerializer, SubjectSerializer, ClassSubjectSerializer , ListClassSubjectSerializer
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from core_app.serializers import StudentSerializer
 
 class GradeListCreateAPIView(generics.ListCreateAPIView):
     queryset = Grade.objects.all()
     serializer_class = GradeSerializer
-    permission_classes = [AllowAny] 
+    permission_classes = [IsAuthenticated] 
 
 class GradeRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Grade.objects.all()
     serializer_class = GradeSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class SectionListCreateAPIView(generics.ListCreateAPIView):
     queryset = Section.objects.all()
     serializer_class = SectionSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class SectionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Section.objects.all()
     serializer_class = SectionSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class SubjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class SubjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class ClassSubjectListAPIView(generics.ListAPIView):
     queryset = ClassSubject.objects.all()
     serializer_class = ListClassSubjectSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = ClassSubject.objects.all()
@@ -65,16 +65,16 @@ class ClassSubjectListAPIView(generics.ListAPIView):
 class ClassSubjectCreateAPIView(generics.CreateAPIView):
     queryset = ClassSubject.objects.all()
     serializer_class = ClassSubjectSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class ClassSubjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ClassSubject.objects.all()
     serializer_class = ClassSubjectSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class TeacherClassSubjectAPIView(generics.ListAPIView):
     serializer_class = ClassSubjectSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         teacher_id = self.kwargs.get('teacher_id')
@@ -83,7 +83,7 @@ class TeacherClassSubjectAPIView(generics.ListAPIView):
 
 class StudentsBySectionListAPIView(generics.ListAPIView):
     serializer_class = StudentSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         grade = self.request.query_params.get('grade')

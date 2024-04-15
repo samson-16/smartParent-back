@@ -7,13 +7,13 @@ from academics.serializers import ListClassSubjectSerializer
 from academics.models import ClassSubject , Section , Grade
 from teacher.serializers import TaskListSerializer, ExamSerializer, ExamResultSerializer
 from core_app.serializers import ParentSerializer
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 
 
 
 
 class ParentDashboardAPIView(APIView):
-    permission_classes =[AllowAny]
+    permission_classes =[IsAuthenticated]
     def get(self, request, parent_id):
         try:
             parent = Parent.objects.get(user__id=parent_id)

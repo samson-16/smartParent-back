@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import User, Student , Parent, Teacher
 from rest_framework import generics, serializers
 from .serializers import UserSerializer , StudentSerializer, ParentSerializer, TeacherSerializer, ParentListSerializer
-from rest_framework.permissions import IsAuthenticated , AllowAny
+from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.hashers import make_password , check_password
 from rest_framework.views import APIView 
 from rest_framework.response import Response
@@ -17,12 +17,12 @@ from django.utils.html import strip_tags
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class UserView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -33,12 +33,12 @@ class UserView(generics.ListAPIView):
 class UserEditView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class StudentCreateAPIView(generics.ListCreateAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -57,7 +57,7 @@ class StudentCreateAPIView(generics.ListCreateAPIView):
 class ParentCreateAPIView(generics.CreateAPIView):
     queryset = Parent.objects.all()
     serializer_class = ParentSerializer
-    permission_classes = [AllowAny] 
+    permission_classes = [IsAuthenticated] 
 
     def perform_create(self, serializer):
         parent_first_name = self.request.data.get('first_name')
@@ -110,7 +110,7 @@ class ParentCreateAPIView(generics.CreateAPIView):
 class ParentListView(generics.ListAPIView):
     queryset = Parent.objects.all()
     serializer_class = ParentListSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -130,7 +130,7 @@ class ParentListView(generics.ListAPIView):
 class TeacherCreateAPIView(generics.CreateAPIView):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
-    permission_classes = [AllowAny] 
+    permission_classes = [IsAuthenticated] 
 
     def perform_create(self, serializer):
         teacher_first_name = self.request.data.get('first_name')
@@ -168,7 +168,7 @@ class TeacherListAPIView(generics.ListAPIView):
 
 
 class TokenObtainPairView(APIView):
-    permission_classes = [AllowAny] 
+    permission_classes = [IsAuthenticated] 
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')

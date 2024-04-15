@@ -1,14 +1,13 @@
 from rest_framework import generics , viewsets
 from .models import Task, Exam, ExamResult, Resource
 from .serializers import TaskSerializer, ExamSerializer, ExamResultSerializer, ResourceSerializer, TaskListSerializer
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, AllowAny
-from django.http import HttpResponse, FileResponse,Http404, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
+from django.http import HttpResponse
 
 
 class TaskListAPIView(generics.ListAPIView):
     serializer_class = TaskListSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         queryset = Task.objects.all()
@@ -24,17 +23,17 @@ class TaskListAPIView(generics.ListAPIView):
 class TaskCreateAPIView(generics.CreateAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class ExamListCreateAPIView(generics.ListCreateAPIView):
     queryset = Exam.objects.all()
     serializer_class = ExamSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
 class ExamResultListCreateAPIView(generics.ListCreateAPIView):
     queryset = ExamResult.objects.all()
     serializer_class = ExamResultSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 class ExamDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Exam.objects.all()
     serializer_class = ExamSerializer
@@ -49,7 +48,7 @@ class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ResourceCreateAPIView(generics.ListCreateAPIView):
     queryset = Resource.objects.all()
     serializer_class = ResourceSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 def download_resource(request, resource_id):
     uploaded_file = Resource.objects.get(pk=resource_id)
     response = HttpResponse(uploaded_file.file, content_type='application/force-download')
