@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import User, Student , Parent, Teacher
 from rest_framework import generics, serializers
 from .serializers import UserSerializer , StudentSerializer, ParentSerializer, TeacherSerializer, ParentListSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated , AllowAny
 from django.contrib.auth.hashers import make_password , check_password
 from rest_framework.views import APIView 
 from rest_framework.response import Response
@@ -22,7 +22,7 @@ class CreateUserView(generics.CreateAPIView):
 class UserView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -57,7 +57,7 @@ class StudentCreateAPIView(generics.ListCreateAPIView):
 class ParentCreateAPIView(generics.CreateAPIView):
     queryset = Parent.objects.all()
     serializer_class = ParentSerializer
-    permission_classes = [IsAuthenticated] 
+    permission_classes = [AllowAny] 
 
     def perform_create(self, serializer):
         parent_first_name = self.request.data.get('first_name')
@@ -110,7 +110,7 @@ class ParentCreateAPIView(generics.CreateAPIView):
 class ParentListView(generics.ListAPIView):
     queryset = Parent.objects.all()
     serializer_class = ParentListSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -157,7 +157,7 @@ class TeacherCreateAPIView(generics.CreateAPIView):
 
 class TeacherListAPIView(generics.ListAPIView):
     serializer_class = TeacherSerializer
-    permission_classes = [IsAuthenticated] 
+    permission_classes = [AllowAny] 
 
     def get_queryset(self):
         queryset = Teacher.objects.all()
@@ -168,7 +168,7 @@ class TeacherListAPIView(generics.ListAPIView):
 
 
 class TokenObtainPairView(APIView):
-    permission_classes = [IsAuthenticated] 
+    permission_classes = [AllowAny] 
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')

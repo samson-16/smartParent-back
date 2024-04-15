@@ -2,12 +2,12 @@
 from rest_framework.generics import ListAPIView, CreateAPIView
 from .models import ChatMessage
 from .serializers import ChatMessageCreateSerializer, ListChatMessagesSerializer
-from rest_framework.permissions import isAuthenticated
+from rest_framework.permissions import IsAuthenticated
 from django.db.models import Q
 
 class ChatMessageListView(ListAPIView):
     serializer_class = ListChatMessagesSerializer
-    permission_classes = [isAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         sender_id = self.request.query_params.get('sender_id')
@@ -32,4 +32,4 @@ class ChatMessageListView(ListAPIView):
 class ChatMessageCreateView(CreateAPIView):
     queryset = ChatMessage.objects.all()
     serializer_class = ChatMessageCreateSerializer
-    permission_classes = [isAuthenticated] 
+    permission_classes = [IsAuthenticated] 

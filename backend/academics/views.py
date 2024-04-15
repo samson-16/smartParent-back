@@ -2,7 +2,7 @@ from rest_framework import generics
 from .models import Grade, Section, Subject, ClassSubject
 from core_app.models import Student
 from .serializers import GradeSerializer, SectionSerializer, SubjectSerializer, ClassSubjectSerializer , ListClassSubjectSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated , AllowAny
 from core_app.serializers import StudentSerializer
 
 class GradeListCreateAPIView(generics.ListCreateAPIView):
@@ -38,7 +38,7 @@ class SubjectRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
 class ClassSubjectListAPIView(generics.ListAPIView):
     queryset = ClassSubject.objects.all()
     serializer_class = ListClassSubjectSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get_queryset(self):
         queryset = ClassSubject.objects.all()
